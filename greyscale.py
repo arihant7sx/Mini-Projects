@@ -2,13 +2,18 @@ import streamlit as st
 from PIL import Image
 from io import BytesIO
 
+
+uploaded_image = st.file_uploader("Upload Image")
+
+
 with st.expander("Start Camera"):
     #Starts the camera
     camera = st.camera_input("Camera")
 
-if camera :
+if camera or uploaded_image :
     #create a pillow image instance
-    img = Image.open(camera)
+    source = uploaded_image if uploaded_image else camera
+    img = Image.open(source)
 
     #Convert the pillow image to greyscale
     grey_img = img.convert("L")
